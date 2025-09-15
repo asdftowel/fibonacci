@@ -4,8 +4,9 @@
 CC     = gcc
 # Source directory (for out-of-tree builds)
 SRCDIR = .
-CFLAGS = -O3 -march=native -flto=auto -fno-trapping-math -fno-signed-zeros -fno-math-errno -ffinite-math-only -lm
+CFLAGS = -O3 -march=native -flto=auto -fno-trapping-math -fno-signed-zeros -fno-math-errno -ffinite-math-only
 WFLAGS = -Wall -Wextra -Wshadow -Wconversion -Wpointer-arith -Werror -pedantic-errors
+LFLAGS = -lm
 # flags for generating instrumentation
 PGOGEN = -fprofile-generate
 # flags for using instrumentation
@@ -21,7 +22,7 @@ PFILES =
 
 fibonacci: $(SRCDIR)/fibonacci.c
 	echo "CCLD $<"
-	$(CC) $(CFLAGS) $(WFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) $(WFLAGS) -o $@ $< $(LFLAGS)
 
 check: $(SRCDIR)/test_values.sh
 	echo "TEST fibonacci$(EXEEXT)"
@@ -33,15 +34,15 @@ clean:
 
 pgo-instr: $(SRCDIR)/fibonacci.c
 	echo "CCLD $<"
-	$(CC) $(CFLAGS) $(WFLAGS) -o fibonacci $< $(PGOGEN)
+	$(CC) $(CFLAGS) $(WFLAGS) $(PGOGEN) -o fibonacci $< $(LFLAGS)
 
 pgo-build: $(SRCDIR)/fibonacci.c
 	$(PRCMND)
 	echo "CCLD $<"
-	$(CC) $(CFLAGS) $(WFLAGS) -o fibonacci $< $(PGOUSE)$(PFILES)
+	$(CC) $(CFLAGS) $(WFLAGS) $(PGOUSE)$(PFILES) -o fibonacci $< $(LFLAGS)
 	echo "RM prof"
 	rm *.$(PROFEX)
 
 pgo: pgo-instr check pgo-build
 
-.SILENT: fibonacci check clean pgo-instr pgo;
+.SILENT: fibonacci check clean pgo-instr pgo-build pgo;
