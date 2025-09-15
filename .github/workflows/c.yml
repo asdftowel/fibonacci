@@ -47,6 +47,6 @@ jobs:
         install: git make mingw-w64-ucrt-x86_64-gcc
     - uses: actions/checkout@v4
     - name: make pgo
-    - run: make pgo EXEEXT='.exe'
+      run: make pgo EXEEXT='.exe'
     - name: make check
       run: make check EXEEXT='.exe'
