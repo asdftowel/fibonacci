@@ -27,7 +27,7 @@ jobs:
    - name: set variables
      run: export LLVM_PROFILE_FILE="fibonacci-%p.profraw"
    - name: make pgo
-     run: CC=clang CFLAGS="$CFLAGS -flto=thin" PRCMND='llvm-profdata merge -output=fibonacci.profdata fibonacci-*.profraw' PGOUSE='-fprofile-instr-use' PFILES='=*.profdata' make pgo
+     run: CC=clang CFLAGS="$CFLAGS -flto=thin" PRCMND='llvm-profdata merge -output=fibonacci.profdata fibonacci-*.profraw' PGOUSE='-fprofile-instr-use=' PFILES='fibonacci.profdata' make pgo
    - name: make check
      run: make check
 
