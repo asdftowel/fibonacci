@@ -4,7 +4,7 @@
 CC     = gcc
 # Source directory (for out-of-tree builds)
 SRCDIR = .
-CFLAGS = -O3 -march=native -flto=auto -fno-semantic-interposition -fno-trapping-math -fno-signed-zeros -fno-math-errno -ffinite-math-only -lm
+CFLAGS = -O3 -march=native -flto=auto -fno-trapping-math -fno-signed-zeros -fno-math-errno -ffinite-math-only -lm
 WFLAGS = -Wall -Wextra -Wshadow -Wconversion -Wpointer-arith -Werror -pedantic-errors
 # flags for generating instrumentation
 PGOGEN = -fprofile-generate
