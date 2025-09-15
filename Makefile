@@ -13,23 +13,23 @@ PRCMND = # Additional commands to run for PGO
 PFILES = # for compilers like clang which require explicit profile names
          # for example "=*.$(PROFEX)"
 
-fibonacci: $(SRCDIR)/fibonacci.c
+fibonacci: ${SRCDIR}/fibonacci.c
 	echo "CCLD $<"
 	$(CC) $(CFLAGS) $(WFLAGS) -o $@ $<
 
-check: $(SRCDIR)/test_values.sh
+check: ${SRCDIR}/test_values.sh
 	echo "TEST fibonacci${EXEEXT}"
 	sh $<
 
 clean:
 	echo "RM fibonacci${EXEEXT}"
-	rm fibonacci$(EXEEXT)
+	rm fibonacci${EXEEXT}
 
-pgo-instr: $(SRCDIR)/fibonacci.c
+pgo-instr: ${SRCDIR}/fibonacci.c
 	echo "CCLD $<"
 	$(CC) $(CFLAGS) $(WFLAGS) -o fibonacci $< $(PGOGEN)
 
-pgo-build: $(SRCDIR)/fibonacci.c
+pgo-build: ${SRCDIR}/fibonacci.c
 	$(PRCMND)
 	echo "CCLD $<"
 	$(CC) $(CFLAGS) $(WFLAGS) -o fibonacci $< $(PGOUSE)$(PFILES)
