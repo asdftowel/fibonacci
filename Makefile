@@ -37,6 +37,7 @@ pgo-instr: $(SRCDIR)/fibonacci.c
 	$(CC) $(CFLAGS) $(WFLAGS) $(PGOGEN) -o fibonacci $< $(LFLAGS)
 
 pgo-build: $(SRCDIR)/fibonacci.c
+	ls -l
 	$(PRCMND)
 	echo "CCLD $<"
 	$(CC) $(CFLAGS) $(WFLAGS) $(PGOUSE)$(PFILES) -o fibonacci $< $(LFLAGS)
