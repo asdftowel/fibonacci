@@ -24,8 +24,10 @@ jobs:
 
    steps:
    - uses: actions/checkout@v4
-   - name: make
-     run: CC=clang CFLAGS="$CFLAGS -flto=thin" make
+   - name: set variables
+     run: export LLVM_PROFILE_FILE="fibonacci-%p.profraw"
+   - name: make pgo
+     run: CC=clang CFLAGS="$CFLAGS -flto=thin" PRCMND='llvm-profdata merge -output=fibonacci.profdata fibonacci-*.profraw' PGOUSE='-fprofile-instr-use' PFILES='=*.profdata' make pgo
    - name: make check
      run: make check
 
@@ -38,13 +40,13 @@ jobs:
         shell: msys2 {0}
 
     steps:
-    - uses: actions/checkout@v4
     - uses: msys2/setup-msys2@v2
       with:
         msystem: UCRT64
         update: true
         install: git make mingw-w64-ucrt-x86_64-gcc
-    - name: make
-    - run: make EXEEXT='.exe'
+    - uses: actions/checkout@v4
+    - name: make pgo
+    - run: make pgo EXEEXT='.exe'
     - name: make check
       run: make check EXEEXT='.exe'

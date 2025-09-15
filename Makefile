@@ -9,6 +9,7 @@ WFLAGS = -Wall -Wextra -Wshadow -Wconversion -Wpointer-arith -Werror -pedantic-e
 PGOGEN = -fprofile-generate # flags for generating instrumentation
 PGOUSE = -fprofile-use # flags for using instrumentation
 PROFEX = gcda # compiler-specific profile data file extension
+PRCMND = # Additional commands to run for PGO
 PFILES = # for compilers like clang which require explicit profile names
          # for example "=*.$(PROFEX)"
 
@@ -29,6 +30,7 @@ pgo-instr: $(SRCDIR)/fibonacci.c
 	$(CC) $(CFLAGS) $(WFLAGS) -o fibonacci $< $(PGOGEN)
 
 pgo-build: $(SRCDIR)/fibonacci.c
+	$(PRCMND)
 	echo "CCLD $<"
 	$(CC) $(CFLAGS) $(WFLAGS) -o fibonacci $< $(PGOUSE)$(PFILES)
 	echo "RM prof"
