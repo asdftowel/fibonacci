@@ -27,7 +27,8 @@ jobs:
    - name: make pgo
      run: |
       export LLVM_PROFILE_FILE="fibonacci-%p.profraw"
-      make pgo CC=clang CFLAGS="$CFLAGS -flto=thin" PRCMND='xcrun llvm-profdata merge -output=fibonacci.profdata $(find -name *.profraw)' PGOUSE='-fprofile-instr-use=' PFILES='fibonacci.profdata'
+      set +f
+      make pgo CC=clang CFLAGS="$CFLAGS -flto=thin" PRCMND='xcrun llvm-profdata merge -output=fibonacci.profdata *.profraw' PGOUSE='-fprofile-instr-use=' PFILES='fibonacci.profdata'
    - name: make check
      run: make check
 
