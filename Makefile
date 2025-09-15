@@ -45,4 +45,4 @@ pgo-build: $(SRCDIR)/fibonacci.c
 
 pgo: pgo-instr check pgo-build
 
-.SILENT: fibonacci check clean pgo-instr pgo-build pgo;
+.SILENT: fibonacci check clean pgo-instr pgo;
