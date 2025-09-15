@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: make
-      run: make pgo
+      run: SRCDIR='.' make pgo
     - name: make check
       run: make check
 
@@ -27,7 +27,7 @@ jobs:
    - name: set variables
      run: export LLVM_PROFILE_FILE="fibonacci-%p.profraw"
    - name: make pgo
-     run: CC=clang CFLAGS="$CFLAGS -flto=thin" PRCMND='llvm-profdata merge -output=fibonacci.profdata fibonacci-*.profraw' PGOUSE='-fprofile-instr-use' PFILES='=*.profdata' make pgo
+     run: SRCDIR='.' CC=clang CFLAGS="$CFLAGS -flto=thin" PRCMND='llvm-profdata merge -output=fibonacci.profdata fibonacci-*.profraw' PGOUSE='-fprofile-instr-use' PFILES='=*.profdata' make pgo
    - name: make check
      run: make check
 
@@ -47,6 +47,6 @@ jobs:
         install: git make mingw-w64-ucrt-x86_64-gcc
     - uses: actions/checkout@v4
     - name: make pgo
-      run: make pgo EXEEXT='.exe'
+      run: make pgo EXEEXT='.exe' SRCDIR='.'
     - name: make check
       run: make check EXEEXT='.exe'
