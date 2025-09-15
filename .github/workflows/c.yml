@@ -24,10 +24,10 @@ jobs:
 
    steps:
    - uses: actions/checkout@v4
-   - name: set variables
-     run: export LLVM_PROFILE_FILE="fibonacci-%p.profraw"
    - name: make pgo
-     run: make pgo CC=clang CFLAGS="$CFLAGS -flto=thin" PRCMND='xcrun llvm-profdata merge -output=fibonacci.profdata $(glob fibonacci-*.profraw)' PGOUSE='-fprofile-instr-use=' PFILES='fibonacci.profdata'
+     run: |
+      export LLVM_PROFILE_FILE="fibonacci-%p.profraw"
+      make pgo CC=clang CFLAGS="$CFLAGS -flto=thin" PRCMND='xcrun llvm-profdata merge -output=fibonacci.profdata $(glob fibonacci-*.profraw)' PGOUSE='-fprofile-instr-use=' PFILES='fibonacci.profdata'
    - name: make check
      run: make check
 
