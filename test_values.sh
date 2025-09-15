@@ -37,6 +37,8 @@ done
 if [ $ERR_COUNT -ne 0 ]
 then
     printf "$ERR_COUNT/$TOTAL_TESTS tests \033[1;31mfailed\033[0m.\n"
+    exit 1
 else
     printf "All tests \033[1;32mpassed\033[0m.\n"
+    exit 0
 fi
