@@ -23,8 +23,12 @@ NUMBERS='0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10
 CURRENT=40
 
 cmp_result() {
-    test "$(./fibonacci $1)" = "fibonacci($1) = $2"
-    ERR_COUNT=$(($ERR_COUNT+$?))
+    RESULT=$(echo "`./fibonacci $1`" | cut -d' ' -f3)
+    if [ $RESULT -ne $2 ]
+    then
+        echo "fibonacci($1) failed: expected $2, got $RESULT"
+        ERR_COUNT=$(($ERR_COUNT+1))
+    fi
     TOTAL_TESTS=$(($TOTAL_TESTS+1))
 }
 
